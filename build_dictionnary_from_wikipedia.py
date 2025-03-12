@@ -4,7 +4,7 @@ import pandas as pd
 from datasets import load_dataset # pip install datasets
 from collections import defaultdict
 
-STOP_AFTER_N_ARTICLES = 2000
+STOP_AFTER_N_ARTICLES = 200000
 MIN_WORD_FREQUENCY = 3
 
 # see https://huggingface.co/datasets/wikimedia/wikipedia
@@ -21,7 +21,7 @@ for i, sample in enumerate(dataset):
     for word in words:
         word_freq[word] += 1
     
-    if (i + 1) % 1000 == 0:
+    if (i + 1) % 100 == 0:
         print(f"Processed {i + 1} articles")
 
     if i == STOP_AFTER_N_ARTICLES:
@@ -29,7 +29,6 @@ for i, sample in enumerate(dataset):
 
 
 filtered_word_freq = {word: freq for word, freq in word_freq.items() if freq >= MIN_WORD_FREQUENCY}
-
 df = pd.DataFrame(list(filtered_word_freq.items()), columns=['Word', 'Frequency'])
 df.sort_values(by='Frequency', ascending=False, inplace=True)
 df.to_csv(f'word_frequencies_{STOP_AFTER_N_ARTICLES}.tsv', sep='\t', index=False)

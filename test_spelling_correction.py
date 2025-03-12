@@ -23,5 +23,10 @@ class TestSpellingCorrection(unittest.TestCase):
         self.assertIn("abdcef", result)
         self.assertEqual(['abcdfe', 'abcedf', 'abdcef', 'acbdef', 'bacdef'], result)
 
+    def test_edits1(self):
+        result = edits1("chaussete")
+        self.assertIn("chaussette", result)
+        self.assertEqual(492, len(result))
+
 if __name__ == '__main__':
     unittest.main()
